@@ -25,4 +25,4 @@ async def index(session: Session = Depends(db.session)):
     """
 
     current_time = datetime.utcnow()
-    return Response(f"Fast-api check API (UTC: {current_time.strftime('%Y.%m.%d %H:%M:%S')}")
+    return Response(f"Fast-api check API (UTC: {current_time.strftime('%Y.%m.%d %H:%M:%S')})")

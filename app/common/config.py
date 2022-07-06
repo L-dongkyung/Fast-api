@@ -15,7 +15,7 @@ class Config:
 @dataclass
 class LocalConfig(Config):
     PROJ_RELOAD: bool = True
-    DB_URL: str = "mysql+pymysql://travis@localhost/Fast-api?charset=utf8mb4"
+    DB_URL: str = "mysql+pymysql://travis:1234@localhost/fast_api?charset=utf8mb4"
 
 @dataclass
 class ProdConfig(Config):
