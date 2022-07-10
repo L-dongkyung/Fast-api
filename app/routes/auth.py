@@ -40,6 +40,12 @@ async def register(sns_type: SnsType, reg_info: UserRegister, session: Session =
 
 @router.post("/login/{sns_type}", status_code=200)
 async def login(sns_type: SnsType, user_info: UserRegister):
+    """
+    유저 로그인 \n
+    :param sns_type: SnsType['email', 'facebook', 'google', 'kakao']
+    :param user_info: UserRegister. id, pw
+    :return: token.
+    """
     if sns_type == SnsType.email:
         is_exist = await is_email_exist(user_info.email)
         if not user_info.email or not user_info.pw:
