@@ -16,10 +16,14 @@ class Config:
 class LocalConfig(Config):
     PROJ_RELOAD: bool = True
     DB_URL: str = "mysql+pymysql://travis:1234@localhost/fast_api?charset=utf8mb4"
+    TRUSTED_HOSTS = ['*']
+    ALLOW_SITE = ['*']
 
 @dataclass
 class ProdConfig(Config):
     PROJ_RELOAD: bool = False
+    TRUSTED_HOSTS = ['*']
+    ALLOW_SITE = ['*']
 
 def conf():
     """
