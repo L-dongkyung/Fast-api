@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
+from fastapi.security import APIKeyHeader
 from dataclasses import asdict
 import uvicorn
 
@@ -10,6 +11,8 @@ from app.middlewares.trusted_hosts import TrustedHostMiddleware
 from app.middlewares.token_validator import AccessControl
 from app.routes import index, auth, users
 from starlette.middleware.cors import CORSMiddleware
+
+API_KEY_HEADER = APIKeyHeader(name="Authorization", auto_error=False)
 
 def create_app():
     """
@@ -39,7 +42,7 @@ def create_app():
     # router
     app.include_router(index.router)
     app.include_router(auth.router, tags=['Authentication'])
-    app.include_router(users.router, prefix="/api")
+    app.include_router(users.router, tags=['Users'], prefix="/api", dependencies=[Depends(API_KEY_HEADER)])
 
     return app
 
