@@ -35,9 +35,10 @@ def create_app():
         allow_headers=['*']
     )
     app.add_middleware(TrustedHostMiddleware, allowed_hosts=conf().TRUSTED_HOSTS, except_path=['/health'])
+
     # router
-    app.include_router(index.router)
-    app.include_router(auth.router, tags=['Authentication'])
+    app.include_router(index.router, prefix="/api")
+    app.include_router(auth.router, tags=['Authentication'], prefix="/api")
 
     return app
 
