@@ -8,7 +8,7 @@ from app.database.conn import db
 
 from app.middlewares.trusted_hosts import TrustedHostMiddleware
 from app.middlewares.token_validator import AccessControl
-from app.routes import index, auth
+from app.routes import index, auth, users
 from starlette.middleware.cors import CORSMiddleware
 
 def create_app():
@@ -37,8 +37,9 @@ def create_app():
     app.add_middleware(TrustedHostMiddleware, allowed_hosts=conf().TRUSTED_HOSTS, except_path=['/health'])
 
     # router
-    app.include_router(index.router, prefix="/api")
-    app.include_router(auth.router, tags=['Authentication'], prefix="/api")
+    app.include_router(index.router)
+    app.include_router(auth.router, tags=['Authentication'])
+    app.include_router(users.router, prefix="/api")
 
     return app
 
