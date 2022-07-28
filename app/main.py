@@ -9,8 +9,10 @@ from app.database.conn import db
 
 from app.middlewares.trusted_hosts import TrustedHostMiddleware
 from app.middlewares.token_validator import AccessControl
+from app.middlewares.token_validator_def import access_control
 from app.routes import index, auth, users
 from starlette.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 
 API_KEY_HEADER = APIKeyHeader(name="Authorization", auto_error=False)
 
@@ -30,6 +32,7 @@ def create_app():
     # redis initialize
     # middleware
     app.add_middleware(AccessControl, except_path_list=EXCEPT_PATH_LIST, except_path_regex=EXCEPT_PATH_REGEX)
+    app.add_middleware(middleware_class=BaseHTTPMiddleware, dispatch=access_control)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=conf().ALLOW_SITE,
